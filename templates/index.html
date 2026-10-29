@@ -25,7 +25,7 @@ p{line-height:1.6}
 </section>
 <section class="card">
 <h2>Analyze your text</h2>
-<form method="POST" action="/">
+<form method="POST" action="/analyze">
 <label for="text">Paste text to analyze</label>
 <textarea id="text" name="text" maxlength="5000" required placeholder="I love this product!">{{ text or '' }}</textarea>
 <button type="submit">Analyze sentiment →</button>
