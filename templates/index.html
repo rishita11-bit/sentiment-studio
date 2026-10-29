@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentiment Studio</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f5fb;color:#20243a;margin:0;padding:20px}
+main{max-width:700px;margin:30px auto}
+.card{background:white;padding:24px;border-radius:16px;margin-bottom:18px;box-shadow:0 4px 18px #00000010}
+h1{color:#5145cd}
+textarea{width:100%;height:150px;box-sizing:border-box;padding:12px;border:1px solid #ccc;border-radius:8px;font-size:16px}
+button{background:#5145cd;color:white;border:0;border-radius:8px;padding:13px 18px;margin-top:12px;font-weight:bold}
+p{line-height:1.6}
+</style>
+</head>
+<body>
+<main>
+<section class="card">
+<p>PROJECT 07 · AI / NLP</p>
+<h1>Sentiment Studio</h1>
+<h2>Understand the feeling behind the words.</h2>
+<p>Analyze product reviews, customer messages, and social comments.</p>
+</section>
+<section class="card">
+<h2>Analyze your text</h2>
+<form method="POST" action="/">
+<label for="text">Paste text to analyze</label>
+<textarea id="text" name="text" maxlength="5000" required placeholder="I love this product!">{{ text or '' }}</textarea>
+<button type="submit">Analyze sentiment →</button>
+</form>
+{% if error %}
+<p>{{ error }}</p>
+{% endif %}
+</section>
+{% if result %}
+<section class="card">
+<h2>Analysis Result</h2>
+<h3>{{ result.sentiment }}</h3>
+<p>{{ result.score }}% score</p>
+<p>{{ result.explanation }}</p>
+<p>Method: {{ result.method }}</p>
+{% if result.positive_words %}
+<p>Positive cues: {{ result.positive_words|join(', ') }}</p>
+{% endif %}
+{% if result.negative_words %}
+<p>Negative cues: {{ result.negative_words|join(', ') }}</p>
+{% endif %}
+</section>
+{% endif %}
+<section class="card">
+<h2>How it works</h2>
+<p>01 — Enter a review or comment.</p>
+<p>02 — Python analyzes its sentiment.</p>
+<p>03 — View the result and detected words.</p>
+</section>
+<footer>Student Portfolio Project · Python · Flask · NLP</footer>
+</main>
+</body>
+</html>
