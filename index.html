@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#4338ca">
+<title>Sentiment Studio</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header><div class="brand">✦ Sentiment Studio</div><span class="tag">AI / NLP PROJECT</span></header>
+<main>
+<section class="hero"><p class="eyebrow">PROJECT 07 · TEXT ANALYTICS</p><h1>Understand the feeling<br>behind the words.</h1><p class="sub">Analyze a product review, customer message, or social comment and see its sentiment in seconds.</p></section>
+<section class="panel">
+<form method="post" action="/analyze">
+<label for="text">Paste text to analyze</label>
+<textarea id="text" name="text" maxlength="5000" placeholder="Example: The delivery was fast and the product is excellent!" required>{{ text or '' }}</textarea>
+<div class="meta"><span>Up to 5,000 characters</span><span id="count">0 / 5000</span></div>
+<div class="actions"><button type="submit">Analyze sentiment <span>→</span></button><button class="secondary" type="button" id="sample">Try sample</button></div>
+</form>
+{% if error %}<p class="error">{{ error }}</p>{% endif %}
+{% if result %}
+<div class="result">
+<div class="result-top"><div><p class="eyebrow">ANALYSIS RESULT</p><h2>{{ result.sentiment }}</h2></div><span class="pill {{ result.sentiment|lower }}">{{ result.score }}% score</span></div>
+<div class="meter"><span class="{{ result.sentiment|lower }}" style="width:{{ result.score }}%"></span></div>
+<p>{{ result.explanation }}</p><p class="method">Method: {{ result.method }}</p>
+{% if result.positive_words %}<p><b>Positive cues:</b> {{ result.positive_words|join(', ') }}</p>{% endif %}
+{% if result.negative_words %}<p><b>Negative cues:</b> {{ result.negative_words|join(', ') }}</p>{% endif %}
+</div>
+{% endif %}
+</section>
+<section class="features"><article><b>01</b><h3>Text input</h3><p>Review or comment entered by the user.</p></article><article><b>02</b><h3>NLP analysis</h3><p>Classifies text as positive, negative, or neutral.</p></article><article><b>03</b><h3>Clear result</h3><p>Shows a score, detected cues, and explanation.</p></article></section>
+<footer>Student portfolio project · Flask + Python · <a href="/health">Health check</a></footer>
+</main>
+<script>
+const box=document.querySelector('#text'), count=document.querySelector('#count');
+function update(){count.textContent=box.value.length+' / 5000'} box.addEventListener('input',update);update();
+document.querySelector('#sample').addEventListener('click',()=>{box.value='The product is excellent, easy to use, and delivery was very fast. I love it!';update();box.focus()});
+</script>
+</body></html>
